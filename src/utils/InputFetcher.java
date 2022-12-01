@@ -16,10 +16,9 @@ import static utils.Constants.TXT;
 import static secrets.Secrets.COOKIE;
 
 public class InputFetcher {
-    static String YEAR = "2020";
+    static String YEAR = "2022";
     public static void createInputFiles() throws IOException, InterruptedException {
         int today = today();
-        today = 1;
 
         if (!inputFileExists(today)) {
             String input = getInput(today);
