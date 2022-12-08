@@ -5,6 +5,6 @@ import static utils.InputFetcher.createInputFiles;
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         createInputFiles();
-        Dec07.run();
+        Dec08.run();
     }
 }
