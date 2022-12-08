@@ -14,19 +14,19 @@ public class Dec08 {
         for (int i = 1; i < input.size() - 1; i++) {
             for (int j = 1; j < input.get(i).length() - 1; j++) {
                 int tree = Integer.parseInt(String.valueOf((input.get(i).charAt(j))));
-                if (checkUp(i, j, tree, input) == 1) {
+                if (isUpFree(i, j, tree, input)) {
                     c++;
                     continue;
                 }
-                if (checkDown(i, j, tree, input) == 1) {
+                if (isDownFree(i, j, tree, input)) {
                     c++;
                     continue;
                 }
-                if (checkLeft(i, j, tree, input) == 1) {
+                if (isLeftFree(i, j, tree, input)) {
                     c++;
                     continue;
                 }
-                if (checkRight(i, j, tree, input) == 1) {
+                if (isRightFree(i, j, tree, input)) {
                     c++;
                 }
             }
@@ -40,10 +40,10 @@ public class Dec08 {
             for (int j = 1; j < input.get(i).length() - 1; j++) {
                 int tree = Integer.parseInt(String.valueOf((input.get(i).charAt(j))));
 
-                int rightCounter = checkRightDistance(i, j, tree, input);
-                int leftCounter = checkLeftDistance(i, j, tree, input);
-                int upCounter = checkUpDistance(i, j, tree, input);
-                int downCounter = checkDownDistance(i, j, tree, input);
+                int rightCounter = calcRight(i, j, tree, input);
+                int leftCounter = calcLeft(i, j, tree, input);
+                int upCounter = calcUp(i, j, tree, input);
+                int downCounter = calcDown(i, j, tree, input);
                 int sum = rightCounter * leftCounter * upCounter * downCounter;
                 max = Math.max(sum, max);
             }
@@ -51,76 +51,76 @@ public class Dec08 {
         System.out.println("part 2: " + max);
     }
 
-    private static int checkRight(int y, int x, int tree, List<String> input) {
+    private static boolean isRightFree(int y, int x, int tree, List<String> input) {
         for (int k = x + 1; k < input.get(y).length(); k++) {
             if (checkNeighbour(y, k, tree, input)) {
-                return 0;
+                return false;
             }
         }
-        return 1;
+        return true;
     }
 
-    private static int checkRightDistance(int y, int x, int tree, List<String> input) {
-        int c = 0;
-        for (int k = x + 1; k < input.get(y).length(); k++) {
-            c++;
-            if (checkNeighbour(y, k, tree, input)) {
-                break;
-            }
-        }
-        return c;
-    }
-
-    private static int checkLeft(int y, int x, int tree, List<String> input) {
+    private static boolean isLeftFree(int y, int x, int tree, List<String> input) {
         for (int k = x - 1; k >= 0; k--) {
             if (checkNeighbour(y, k, tree, input)) {
-                return 0;
+                return false;
             }
         }
-        return 1;
+        return true;
     }
 
-    private static int checkLeftDistance(int y, int x, int tree, List<String> input) {
-        int c = 0;
-        for (int k = x - 1; k >= 0; k--) {
-            c++;
-            if (checkNeighbour(y, k, tree, input)) {
-                break;
-            }
-        }
-        return c;
-    }
-
-    private static int checkUp(int y, int x, int tree, List<String> input) {
+    private static boolean isUpFree(int y, int x, int tree, List<String> input) {
         for (int k = y - 1; k >= 0; k--) {
             if (checkNeighbour(k, x, tree, input)) {
-                return 0;
+                return false;
             }
         }
-        return 1;
+        return true;
     }
 
-    private static int checkUpDistance(int y, int x, int tree, List<String> input) {
-        int c = 0;
-        for (int k = y - 1; k >= 0; k--) {
-            c++;
-            if (checkNeighbour(k, x, tree, input)) {
-                break;
-            }
-        }
-        return c;
-    }
-
-    private static int checkDown(int y, int x, int tree, List<String> input) {
+    private static boolean isDownFree(int y, int x, int tree, List<String> input) {
         for (int k = y + 1; k < input.size(); k++) {
             if (checkNeighbour(k, x, tree, input)) {
-                return 0;
+                return false;
             }
         }
-        return 1;
+        return true;
     }
 
-    private static int checkDownDistance(int y, int x, int tree, List<String> input) {
+    private static int calcRight(int y, int x, int tree, List<String> input) {
+        int c = 0;
+        for (int k = x + 1; k < input.get(y).length(); k++) {
+            c++;
+            if (checkNeighbour(y, k, tree, input)) {
+                break;
+            }
+        }
+        return c;
+    }
+
+    private static int calcLeft(int y, int x, int tree, List<String> input) {
+        int c = 0;
+        for (int k = x - 1; k >= 0; k--) {
+            c++;
+            if (checkNeighbour(y, k, tree, input)) {
+                break;
+            }
+        }
+        return c;
+    }
+
+    private static int calcUp(int y, int x, int tree, List<String> input) {
+        int c = 0;
+        for (int k = y - 1; k >= 0; k--) {
+            c++;
+            if (checkNeighbour(k, x, tree, input)) {
+                break;
+            }
+        }
+        return c;
+    }
+
+    private static int calcDown(int y, int x, int tree, List<String> input) {
         int c = 0;
         for (int k = y + 1; k < input.size(); k++) {
             c++;
